@@ -21,7 +21,6 @@ const Login = () => {
         email,
         password,
       });
-      console.log(res);
       if (res && res.data.success) {
         toast.success(res.data && res.data.message);
         setAuth({
