@@ -23,6 +23,9 @@ const Login = () => {
       });
       if (res && res.data.success) {
         toast.success(res.data && res.data.message);
+        console.log('User = ', res.data.user._id);
+        console.log('Token =  ', res.data.token);
+        console.log('pass = ', res.data.password);
         setAuth({
           ...auth,
           user: res.data.user,
@@ -39,7 +42,7 @@ const Login = () => {
     }
   };
   return (
-    <Layout title="Register - Ecommer App">
+    <Layout title="Register - Ecommerce App">
       <div className="form-container ">
         <form onSubmit={handleSubmit}>
           <h4 className="title">LOGIN FORM</h4>
