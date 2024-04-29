@@ -23,7 +23,11 @@ const productSchema = new mongoose.Schema(
       ref: "Category",
       required: true,
     },
-   
+    Reviews: {
+      type: mongoose.ObjectId,
+      ref: "Reviews",
+      
+    },
     quantity: {
       type: Number,
       required: true,

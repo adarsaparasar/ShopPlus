@@ -6,7 +6,10 @@ import { Checkbox, Radio } from "antd";
 import { Prices } from "../components/Prices";
 import { useCart } from "../context/cart";
 import { useWish } from "../context/wish";
+import { AiOutlineReload } from "react-icons/ai";
 import toast from "react-hot-toast";
+import "../styles/Homepage.css";
+
 const HomePage = () => {
   const navigate = useNavigate();
   const [cart, setCart] = useCart();
@@ -19,21 +22,10 @@ const HomePage = () => {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
 
-  // Function to retrieve user ID from session
-function getUserIdFromSession() {
-  // Your code to retrieve user ID from session
-  // For demonstration purposes, returning a mock user ID
-  return 'user123';
-}
-// Function to retrieve user's cart from local storage
-function getUserCart(userId) {
-  return JSON.parse(localStorage.getItem(`cart_${userId}`)) || [];
-}
-
-  //get all cat
+ //get all cat
   const getAllCategory = async () => {
     try {
-      const { data } = await axios.get("/api/v1/category/get-category");
+      const { data } = await axios.get("https://shopplus-oej3.onrender.com/api/v1/category/get-category");
       if (data?.success) {
         setCategories(data?.category);
       }
@@ -46,11 +38,13 @@ function getUserCart(userId) {
     getAllCategory();
     getTotal();
   }, []);
+
+
   //get products
   const getAllProducts = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get(`/api/v1/product/product-list/${page}`);
+      const { data } = await axios.get(`https://shopplus-oej3.onrender.com/api/v1/product/product-list/${page}`);
       setLoading(false);
       setProducts(data.products);
     } catch (error) {
@@ -77,7 +71,7 @@ function getUserCart(userId) {
   const loadMore = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get(`/api/v1/product/product-list/${page}`);
+      const { data } = await axios.get(`https://shopplus-oej3.onrender.com/api/v1/product/product-list/${page}`);
       setLoading(false);
       setProducts([...products, ...data?.products]);
     } catch (error) {
@@ -107,7 +101,7 @@ function getUserCart(userId) {
   //get filterd product
   const filterProduct = async () => {
     try {
-      const { data } = await axios.post("/api/v1/product/product-filters", {
+      const { data } = await axios.post("https://shopplus-oej3.onrender.com/api/v1/product/product-filters", {
         checked,
         radio,
       });
@@ -157,7 +151,7 @@ function getUserCart(userId) {
             {products?.map((p) => (
               <div className="card m-2" style={{ width: "18rem" }} key={p._id}>
                 <img
-                  src={`/api/v1/product/product-photo/${p._id}`}
+                  src={`https://shopplus-oej3.onrender.com/api/v1/product/product-photo/${p._id}`}
                   className="card-img-top"
                   alt={p.name}
                 />
@@ -214,7 +208,14 @@ function getUserCart(userId) {
                   setPage(page + 1);
                 }}
               >
-                {loading ? "Loading ..." : "Loadmore"}
+                {loading ? (
+                  "Loading ..."
+                ) : (
+                  <>
+                    {" "}
+                    Loadmore <AiOutlineReload />
+                  </>
+                )}
               </button>
             )}
           </div>
