@@ -8,10 +8,7 @@ import categoryRoutes from "./routes/categoryRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
 import cors from 'cors';
 import path from 'path';
-<<<<<<< HEAD
 import Review from './models/reviewModel.js';
-=======
->>>>>>> 3a266def63e152642802eec4c51524e6f8a31a31
 import { fileURLToPath } from 'url';
 //configure env
 dotenv.config()
@@ -40,7 +37,6 @@ app.use('/api/v1/auth', authRoutes);
 app.use("/api/v1/category", categoryRoutes);
 app.use("/api/v1/product", productRoutes);
 
-<<<<<<< HEAD
 app.post('/api/v1/reviews', async (req, res) => {
     try {
       const { rating, reviewText } = req.body;
@@ -56,18 +52,13 @@ app.post('/api/v1/reviews', async (req, res) => {
   app.get('/api/v1/reviews', async (req, res) => {
     try {
       const reviews = await Review.find();
-      console.log(res);
+      console.log("Review fetched",reviews);
       res.json(reviews);
     } catch (err) {      
       res.status(500).json({ error: 'Internal server error' });
     }
   });
 
-=======
-//---------------------deployment -------------------
-
-//---------------------deployment-------------------
->>>>>>> 3a266def63e152642802eec4c51524e6f8a31a31
 //rest api
 app.use('*', function (req, res) {
     res.sendFile(path.join(__dirname, './client/build/index.html'));
