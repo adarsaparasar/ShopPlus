@@ -5,7 +5,8 @@ const Review = () => {
   const [rating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState('');
   const [reviews, setReviews] = useState([]);
-  
+  const [averageRating, setAverageRating] = useState(0);
+
   useEffect(() => {
     // Fetch data from the Express API when the component mounts
     axios.get('https://shopplus-oej3.onrender.com/api/v1/reviews')
@@ -17,7 +18,20 @@ const Review = () => {
         console.error('Error fetching reviews:', error);
       });
   }, []); 
-
+  useEffect(() => {
+    const calculateAverageRating = (reviews) => {
+      if (reviews.length === 0) {
+        return 0;
+      }
+  
+      const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
+      const averageRating = totalRating / reviews.length;
+      return averageRating.toFixed(2);;
+    };
+  
+    const average = calculateAverageRating(reviews);
+    setAverageRating(average);
+  }, [reviews]);
   const handleRatingChange = (value) => {
     setRating(value);
   };
@@ -44,6 +58,7 @@ const Review = () => {
 
   return (
     <>
+      <p>Average Rating: {averageRating}</p>
       <form onSubmit={handleSubmit} style={styles.form}>
       <div style={styles.inputGroup}>
         <label htmlFor="rating" style={styles.label}>Rating:</label>
@@ -72,7 +87,7 @@ const Review = () => {
         {reviews.map(review => (
           <li key={review._id} style={styles.reviewItem}>
             <p>Rating: {review.rating}</p>
-            <p>Review: {review.reviewText}</p>
+             <p>Review: {review.reviewText}</p>
             <hr style={styles.hr}/>
           </li>
           ))}
