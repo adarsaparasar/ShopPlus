@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
+import Loader from "./Loader";
 import Layout from "./../components/Layout/Layout";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -43,9 +44,11 @@ const HomePage = () => {
   //get products
   const getAllProducts = async () => {
     try {
+
       setLoading(true);
       const { data } = await axios.get(`https://shopplus-oej3.onrender.com/api/v1/product/product-list/${page}`);
       setLoading(false);
+
       setProducts(data.products);
     } catch (error) {
       setLoading(false);
@@ -111,6 +114,10 @@ const HomePage = () => {
     }
   };
   return (
+    <>
+      {/* <Suspense fallback={<Loader/>}>
+        <Loader/>
+    </Suspense> */}
     <Layout title={"All Products - Best offers "}>
       <img
         src="/images/banner1.jpg"
@@ -157,14 +164,12 @@ const HomePage = () => {
         </div>
         <div className="col-md-9 offset-1">
           <h1 className="text-center">All Products</h1>
-          <div className="d-flex flex-wrap">
-            {products?.map((p) => (
+            <div className="d-flex flex-wrap">
+             
+              {products?.map((p) => (
+               
               <div className="card m-2" style={{ width: "18rem" }} key={p._id}>
-                <img
-                  src={`https://shopplus-oej3.onrender.com/api/v1/product/product-photo/${p._id}`}
-                  className="card-img-top"
-                  alt={p.name}
-                />
+                
                 <div className="card-body">
                   <h5 className="card-title">{p.name}</h5>
                   <p className="card-text">
@@ -231,7 +236,10 @@ const HomePage = () => {
           </div>
         </div>
       </div>
-    </Layout>
+  
+      </Layout>
+      
+    </>
   );
 };
 

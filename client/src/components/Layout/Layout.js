@@ -1,4 +1,5 @@
-import React from "react";
+import React, { Suspense } from "react";
+
 import Footer from "./Footer";
 import Header from "./Header";
 import { Helmet } from "react-helmet";
@@ -16,10 +17,10 @@ const Layout = ({ children, title, description, keywords, author }) => {
       <Header />
       <main style={{ minHeight: "70vh" }}>
         <Toaster />
-
         {children}
       </main>
       <Footer />
+     
     </div>
   );
 };
